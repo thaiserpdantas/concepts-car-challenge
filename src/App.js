@@ -11,7 +11,7 @@ function App() {
     api.get('repositories').then(response => {
       setRepositories(response.data);
     });
-  }, [repositories]);
+  }, []);
 
 
   async function handleAddRepository() {
@@ -26,9 +26,12 @@ function App() {
   }
 
   async function handleRemoveRepository(id) {
-    await api.delete(`repositories/${id}`);
+    const response = await api.delete(`repositories/${id}`);
+    console.log(response)
 
-    setRepositories([...repositories]);
+    if (response.status === 204) {
+      setRepositories(repositories.filter(repo => repo.id !== id))
+    }
   }
 
   return (
