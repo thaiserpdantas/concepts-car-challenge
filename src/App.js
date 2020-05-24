@@ -9,11 +9,9 @@ function App() {
 
   useEffect(() => {
     api.get('repositories').then(response => {
-      console.log(response);
-
       setRepositories(response.data);
     });
-  }, []);
+  }, [repositories]);
 
 
   async function handleAddRepository() {
@@ -28,7 +26,10 @@ function App() {
   }
 
   async function handleRemoveRepository(id) {
-    // TODO
+    await api.delete(`repositories/${id}`);
+
+    // const repo = response.data;
+    setRepositories([...repositories]);
   }
 
   return (
@@ -39,12 +40,10 @@ function App() {
           <li key={repo.id}>
             {repo.title}
 
-            <button onClick={() => handleRemoveRepository(1)}>Remover</button>
+            <button onClick={() => handleRemoveRepository(repo.id)}>Remover</button>
 
-          </li>)}
-
-
-
+          </li>)
+        }
       </ul>
 
       <button onClick={handleAddRepository}>Adicionar</button>
