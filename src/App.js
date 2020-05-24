@@ -28,7 +28,6 @@ function App() {
   async function handleRemoveRepository(id) {
     await api.delete(`repositories/${id}`);
 
-    // const repo = response.data;
     setRepositories([...repositories]);
   }
 
